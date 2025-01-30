@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine for U</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffe6e6;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            color: #d63384;
+            position: relative;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .heart {
+            font-size: 50px;
+            animation: heartbeat 1s infinite alternate;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+        .message {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .btn {
+            background-color: #ff4d6d;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .hidden-message {
+            display: none;
+            font-size: 20px;
+            margin-top: 20px;
+            color: #ff3366;
+        }
+        .image-container {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        img {
+            width: 300px;
+            height: auto;
+        }
+        /* ปุ่มเสียง */
+        .volume-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 30px;
+            color: #ff4d6d;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Happy Valentine's Day </h1>
+        <div class="heart">💖</div>
+        <p class="message">คลิกปุ่มด้านล่างเพื่อรับข้อความพิเศษจากฉัน ✨</p>
+        <button class="btn" onclick="showMessage()">Cute</button>
+        <button class="btn" id="startMusicBtn" onclick="startMusic()">This song 4 U</button>
+        <p class="hidden-message" id="specialMessage">เธอคือคนที่พิเศษที่สุดสำหรับฉัน ❤️ ขอให้วันนี้เต็มไปด้วยความสุขนะ!</p>
+        
+        <div class="image-container" id="imageContainer">
+            <img src="you are super cute, sweetie.jpg" alt="Valentine's Image">
+        </div>
+        
+        <!-- เพลง -->
+        <audio id="music" src="c:\Users\Sirawich Mankhong\Downloads\Dan  Shay, Justin Bieber - 10,000 Hours (Official Music Video).mp3" preload="auto"></audio>
+        
+        <!-- ปุ่มเปิด/ปิดเสียง -->
+        <button class="volume-btn" onclick="toggleMute()">
+            <i id="volumeIcon" class="fas fa-volume-up"></i>
+        </button>
+    </div>
+    
+    <script>
+        var music = document.getElementById('music');
+
+        // ฟังก์ชันเริ่มเล่นเพลง
+        function startMusic() {
+            // เล่นเพลงและตั้งเสียงเบาลง
+            music.play();
+            music.volume = 0.1; // ปรับระดับเสียงให้เบาลง
+            document.getElementById('startMusicBtn').style.display = 'none'; // ซ่อนปุ่มเริ่มเพลงหลังจากคลิก
+        }
+
+        function showMessage() {
+            // แสดงข้อความ
+            document.getElementById('specialMessage').style.display = 'block';
+            // แสดงรูปภาพ
+            document.getElementById('imageContainer').style.display = 'block';
+        }
+        
+        function toggleMute() {
+            music.muted = !music.muted;
+            var volumeIcon = document.getElementById('volumeIcon');
+            if (music.muted) {
+                volumeIcon.classList.remove('fa-volume-up');
+                volumeIcon.classList.add('fa-volume-mute');
+            } else {
+                volumeIcon.classList.remove('fa-volume-mute');
+                volumeIcon.classList.add('fa-volume-up');
+            }
+        }
+    </script>
+</body>
+</html>
