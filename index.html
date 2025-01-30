@@ -79,8 +79,10 @@
             <img src="you are super cute, sweetie.jpg" alt="Valentine's Image">
         </div>
         
-        <!-- เพลง -->
-        <audio id="music" src="c:\Users\Sirawich Mankhong\Downloads\Dan  Shay, Justin Bieber - 10,000 Hours (Official Music Video).mp3" preload="auto"></audio>
+        <!-- YouTube Video Embed -->
+        <div id="musicContainer" style="display: none;">
+            <iframe id="music" width="560" height="315" src="https://www.youtube.com/watch?v=Y2E71oe0aSM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
         
         <!-- ปุ่มเปิด/ปิดเสียง -->
         <button class="volume-btn" onclick="toggleMute()">
@@ -89,13 +91,12 @@
     </div>
     
     <script>
-        var music = document.getElementById('music');
+        var musicIframe = document.getElementById('music');
+        var isMuted = true;
 
-        // ฟังก์ชันเริ่มเล่นเพลง
+        // ฟังก์ชันเริ่มเล่นเพลงจาก YouTube
         function startMusic() {
-            // เล่นเพลงและตั้งเสียงเบาลง
-            music.play();
-            music.volume = 0.1; // ปรับระดับเสียงให้เบาลง
+            document.getElementById('musicContainer').style.display = 'block';
             document.getElementById('startMusicBtn').style.display = 'none'; // ซ่อนปุ่มเริ่มเพลงหลังจากคลิก
         }
 
@@ -107,9 +108,12 @@
         }
         
         function toggleMute() {
-            music.muted = !music.muted;
+            isMuted = !isMuted;
             var volumeIcon = document.getElementById('volumeIcon');
-            if (music.muted) {
+            var muteParam = isMuted ? "mute=1" : "mute=0";
+            var videoSrc = "https://www.youtube.com/embed/Y2E71oe0aSM?autoplay=1&" + muteParam;
+            musicIframe.src = videoSrc; // ปรับ URL สำหรับเปิดเสียงหรือปิดเสียง
+            if (isMuted) {
                 volumeIcon.classList.remove('fa-volume-up');
                 volumeIcon.classList.add('fa-volume-mute');
             } else {
