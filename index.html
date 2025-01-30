@@ -79,8 +79,13 @@
             <img src="you are super cute, sweetie.jpg" alt="Valentine's Image">
         </div>
         
-        <!-- เพลง -->
-        <audio id="music" src="https://poiczx0690.github.io/valentine/Dan  Shay, Justin Bieber - 10,000 Hours (Official Music Video).mp3" preload="auto"></audio>
+        <!-- ฝัง YouTube (ซ่อนคลิปไว้แต่ให้เสียงเล่น) -->
+<div id="youtubePlayer" style="display: none;">
+    <iframe id="ytPlayer" width="300" height="200" 
+        src="https://www.youtube.com/watch?v=Y2E71oe0aSMautoplay=1&loop=1&playlist=RbWQ5Y1QX0M"
+        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+    </iframe>
+</div>
         
         <!-- ปุ่มเปิด/ปิดเสียง -->
         <button class="volume-btn" onclick="toggleMute()">
@@ -96,7 +101,10 @@
             // เล่นเพลงและตั้งเสียงเบาลง
             music.play();
             music.volume = 0.1; // ปรับระดับเสียงให้เบาลง
-            document.getElementById('startMusicBtn').style.display = 'none'; // ซ่อนปุ่มเริ่มเพลงหลังจากคลิก
+            function startMusic() {
+    document.getElementById('youtubePlayer').style.display = 'block'; 
+    document.getElementById('startMusicBtn').style.display = 'none'; // ซ่อนปุ่ม
+}
         }
 
         function showMessage() {
