@@ -64,53 +64,67 @@
             color: #ff4d6d;
             cursor: pointer;
         }
+        /* ปุ่มเริ่มเว็บ */
+        .start-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .start-btn {
+            background-color: #ff4d6d;
+            color: white;
+            padding: 15px 30px;
+            font-size: 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+    <!-- ปุ่มเริ่มเว็บ (ต้องแตะ 1 ครั้งเพื่อเล่นเพลง) -->
+    <div class="start-overlay" id="startOverlay">
+        <button class="start-btn" onclick="startApp()">This song for U</button>
+    </div>
+
     <div class="container">
         <h1>Happy Valentine's Day </h1>
         <div class="heart">💖</div>
-        <p class="message">คลิกปุ่มด้านล่างเพื่อรับข้อความพิเศษจากฉัน ✨</p>
+        <p class="message">ลองคลิกปุ่มด้านล่างดูสิ ✨</p>
         <button class="btn" onclick="showMessage()">Cute</button>
-        <button class="btn" id="startMusicBtn" onclick="startMusic()">This song 4 U</button>
         <p class="hidden-message" id="specialMessage">เธอคือคนที่พิเศษที่สุดสำหรับฉัน ❤️ ขอให้วันนี้เต็มไปด้วยความสุขนะ!</p>
         
         <div class="image-container" id="imageContainer">
             <img src="you are super cute, sweetie.jpg" alt="Valentine's Image">
         </div>
         
-        <!-- ฝัง YouTube (ซ่อนคลิปไว้แต่ให้เสียงเล่น) -->
-<div id="youtubePlayer" style="display: none;">
-    <iframe id="ytPlayer" width="300" height="200" 
-        src="https://www.youtube.com/watch?v=Y2E71oe0aSMautoplay=1&loop=1&playlist=RbWQ5Y1QX0M"
-        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-    </iframe>
-</div>
+        <!-- เพลง -->
+        <audio id="music" src="valentine/Dan  Shay, Justin Bieber - 10,000 Hours (Official Music Video).mp3" preload="auto"></audio>
         
-        <!-- ปุ่มเปิด/ปิดเสียง -->
-        <button class="volume-btn" onclick="toggleMute()">
-            <i id="volumeIcon" class="fas fa-volume-up"></i>
-        </button>
+        
     </div>
     
     <script>
         var music = document.getElementById('music');
 
-        // ฟังก์ชันเริ่มเล่นเพลง
-        function startMusic() {
-            // เล่นเพลงและตั้งเสียงเบาลง
+        function startApp() {
+            // เล่นเพลงและตั้งระดับเสียง
             music.play();
-            music.volume = 0.1; // ปรับระดับเสียงให้เบาลง
-            function startMusic() {
-    document.getElementById('youtubePlayer').style.display = 'block'; 
-    document.getElementById('startMusicBtn').style.display = 'none'; // ซ่อนปุ่ม
-}
+            music.volume = 0.1;
+
+            // ซ่อนหน้าปกเริ่มต้น
+            document.getElementById('startOverlay').style.display = 'none';
         }
 
         function showMessage() {
-            // แสดงข้อความ
             document.getElementById('specialMessage').style.display = 'block';
-            // แสดงรูปภาพ
             document.getElementById('imageContainer').style.display = 'block';
         }
         
