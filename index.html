@@ -64,23 +64,45 @@
             color: #ff4d6d;
             cursor: pointer;
         }
+        /* จัดวางวิดีโอให้อยู่ตรงกลาง */
+        .video-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        /* ปรับแต่งวิดีโอ */
+        video {
+            max-width: 50%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border: 5px solid #ff4d6d;
+            padding: 10px;
+            background: white;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Happy Valentine's Day </h1>
         <div class="heart">💖</div>
-        <p class="message">คลิกปุ่มด้านล่างเพื่อรับข้อความพิเศษจากฉัน ✨</p>
-        <button class="btn" onclick="showMessage()">Cute</button>
-        <button class="btn" id="startMusicBtn" onclick="startMusic()">This song 4 U</button>
+        <p class="message"> </p>
+        <button class="btn" onclick="showMessage()">Click✨</button>
+        <button class="btn" id="startVideoBtn" onclick="startVideo()">This song 4 U</button>
         <p class="hidden-message" id="specialMessage">เธอคือคนที่พิเศษที่สุดสำหรับฉัน ❤️ ขอให้วันนี้เต็มไปด้วยความสุขนะ!</p>
         
         <div class="image-container" id="imageContainer">
             <img src="you are super cute, sweetie.jpg" alt="Valentine's Image">
         </div>
         
-        <!-- เพลง -->
-        <audio id="music" src="valentine\ Dan  Shay, Justin Bieber - 10,000 Hours (Official Music Video).mp3" preload="auto"></audio>
+        <!-- วิดีโอ -->
+        <div class="video-container" id="videoContainer">
+            <video id="video" controls>
+                <source src="Billkin - ชอบตัวเองตอนอยู่กับเธอ (I Like Us) - Official MV.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
         
         <!-- ปุ่มเปิด/ปิดเสียง -->
         <button class="volume-btn" onclick="toggleMute()">
@@ -89,14 +111,14 @@
     </div>
     
     <script>
-        var music = document.getElementById('music');
+        var video = document.getElementById('video');
+        var videoContainer = document.getElementById('videoContainer');
 
-        // ฟังก์ชันเริ่มเล่นเพลง
-        function startMusic() {
-            // เล่นเพลงและตั้งเสียงเบาลง
-            music.play();
-            music.volume = 0.1; // ปรับระดับเสียงให้เบาลง
-            document.getElementById('startMusicBtn').style.display = 'none'; // ซ่อนปุ่มเริ่มเพลงหลังจากคลิก
+        // ฟังก์ชันเริ่มเล่นวิดีโอ
+        function startVideo() {
+            videoContainer.style.display = 'flex';  // แสดง container ของวิดีโอ
+            video.play();
+            document.getElementById('startVideoBtn').style.display = 'none'; // ซ่อนปุ่มเริ่มวิดีโอ
         }
 
         function showMessage() {
@@ -107,9 +129,9 @@
         }
         
         function toggleMute() {
-            music.muted = !music.muted;
+            video.muted = !video.muted;
             var volumeIcon = document.getElementById('volumeIcon');
-            if (music.muted) {
+            if (video.muted) {
                 volumeIcon.classList.remove('fa-volume-up');
                 volumeIcon.classList.add('fa-volume-mute');
             } else {
