@@ -12,6 +12,7 @@
             text-align: center;
             color: #d63384;
             position: relative;
+            overflow: hidden;
         }
         .container {
             margin-top: 50px;
@@ -37,43 +38,27 @@
             border-radius: 5px;
             cursor: pointer;
             margin-top: 20px;
+            transition: opacity 0.5s ease, transform 0.3s ease;
         }
-        .hidden-message {
-            display: none;
-            font-size: 20px;
-            margin-top: 20px;
-            color: #ff3366;
+        .btn:hover {
+            background-color: #ff3366;
+            transform: scale(1.1);
         }
-        .image-container {
+        .hidden-message, .image-container {
             display: none;
-            text-align: center;
-            margin-top: 20px;
         }
         img {
             width: 300px;
             height: auto;
         }
-        /* ปุ่มเสียง */
-        .volume-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            font-size: 30px;
-            color: #ff4d6d;
-            cursor: pointer;
-        }
-        /* จัดวางวิดีโอให้อยู่ตรงกลาง */
         .video-container {
             display: none;
             justify-content: center;
             align-items: center;
             margin-top: 20px;
         }
-        /* ปรับแต่งวิดีโอ */
         video {
-            max-width: 30%;
+            max-width: 40%;
             height: auto;
             border-radius: 15px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
@@ -81,22 +66,32 @@
             padding: 10px;
             background: white;
         }
+        #startVideoBtn {
+            display: none;
+        }
+        .lyrics {
+            font-size: 20px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #d63384;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Happy Valentine's Day </h1>
         <div class="heart">💖</div>
-        <p class="message"> </p>
-        <button class="btn" onclick="showMessage()">Click✨</button>
-        <button class="btn" id="startVideoBtn" onclick="startVideo()">This song 4 U</button>
-        <p class="hidden-message" id="specialMessage">เธอคือคนที่พิเศษที่สุดสำหรับฉัน ❤️ ขอให้วันนี้เต็มไปด้วยความสุขนะ!</p>
+        <p class="message"></p>
         
+        <button class="btn" id="trickyButton" onclick="showMessage()">Click✨</button>
+        <button class="btn" id="startVideoBtn" onclick="startVideo()">This song 4 U</button>
+
+        <p class="hidden-message" id="specialMessage">เธอคือคนที่พิเศษที่สุดสำหรับฉัน ❤️ ขอให้วันนี้เต็มไปด้วยความสุขนะ!</p>
         <div class="image-container" id="imageContainer">
             <img src="you are super cute, sweetie.jpg" alt="Valentine's Image">
         </div>
         
-        <!-- วิดีโอ -->
         <div class="video-container" id="videoContainer">
             <video id="video" controls>
                 <source src="Billkin - ชอบตัวเองตอนอยู่กับเธอ (I Like Us) - Official MV.mp4" type="video/mp4">
@@ -104,40 +99,52 @@
             </video>
         </div>
         
-        <!-- ปุ่มเปิด/ปิดเสียง -->
-        <button class="volume-btn" onclick="toggleMute()">
-            <i id="volumeIcon" class="fas fa-volume-up"></i>
-        </button>
+        <!-- Lyrics Display -->
+        <div id="lyrics" class="lyrics"></div>
     </div>
     
     <script>
-        var video = document.getElementById('video');
-        var videoContainer = document.getElementById('videoContainer');
-
-        // ฟังก์ชันเริ่มเล่นวิดีโอ
-        function startVideo() {
-            videoContainer.style.display = 'flex';  // แสดง container ของวิดีโอ
-            video.play();
-            document.getElementById('startVideoBtn').style.display = 'none'; // ซ่อนปุ่มเริ่มวิดีโอ
-        }
-
         function showMessage() {
-            // แสดงข้อความ
             document.getElementById('specialMessage').style.display = 'block';
-            // แสดงรูปภาพ
             document.getElementById('imageContainer').style.display = 'block';
+            document.getElementById('trickyButton').style.display = 'none';
+            document.getElementById('startVideoBtn').style.display = 'inline-block';
         }
-        
-        function toggleMute() {
-            video.muted = !video.muted;
-            var volumeIcon = document.getElementById('volumeIcon');
-            if (video.muted) {
-                volumeIcon.classList.remove('fa-volume-up');
-                volumeIcon.classList.add('fa-volume-mute');
-            } else {
-                volumeIcon.classList.remove('fa-volume-mute');
-                volumeIcon.classList.add('fa-volume-up');
-            }
+
+        function startVideo() {
+            const video = document.getElementById('video');
+            video.volume = 0.2; // ลดเสียงลงของระดับเสียงเต็ม
+            document.getElementById('videoContainer').style.display = 'flex';
+            document.getElementById('specialMessage').style.display = 'none';
+            document.getElementById('imageContainer').style.display = 'none';
+            document.getElementById('startVideoBtn').style.display = 'none';
+            video.play();
+
+            // เริ่มแสดงเนื้อเพลง
+            showLyrics(video);
+        }
+
+        function showLyrics(video) {
+            const lyricsElement = document.getElementById('lyrics');
+            const lyrics = [
+                { time: 0, text: "เริ่มต้นเพลงนี้ด้วยความรู้สึกที่อยากจะขอบคุณจริงๆ" },
+                { time: 3, text: "ทุกครั้งที่ได้คุยกับต้า มันรู้สึกดีมากจริงๆนะ✨" },
+                { time: 7, text: "ขอบคุณนะคับที่ทำให้ทุกวันของพี่มีแต่ความสดใส❤️" },
+                { time: 10, text: "Luv U<3" },
+                { time: 12, text: "ฉันชอบตัวเองเวลาที่อยู่กับเธอ💖" }
+            ];
+
+            // ใช้ event timeupdate เพื่อตรวจสอบเวลาในวิดีโอ
+            video.ontimeupdate = function() {
+                const currentTime = video.currentTime;
+                // เช็คว่าเวลาในวิดีโอตรงกับเนื้อเพลงที่กำหนดไว้หรือไม่
+                lyrics.forEach(function(lyric) {
+                    if (Math.floor(currentTime) === lyric.time) {
+                        lyricsElement.innerText = lyric.text;
+                        lyricsElement.style.display = 'block';
+                    }
+                });
+            };
         }
     </script>
 </body>
