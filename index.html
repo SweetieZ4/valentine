@@ -76,20 +76,37 @@
             color: #d63384;
             display: none;
         }
+        /* เอฟเฟกต์หัวใจลอยขึ้น */
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff4d6d;
+            animation: floatUp 5s linear infinite;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Happy Valentine's Day </h1>
+        
         <div class="heart">💖</div>
         <p class="message"></p>
         
         <button class="btn" id="trickyButton" onclick="showMessage()">Click✨</button>
-        <button class="btn" id="startVideoBtn" onclick="startVideo()">This song 4 U🫣</button>
+        <button class="btn" id="startVideoBtn" onclick="startVideo()">This song for you</button>
 
-        <p class="hidden-message" id="specialMessage">ว่างายคนน่ารัก วันนี้วันอารายน้าา ขอให้วันนี้เต็มไปด้วยความสุขนะ อิอิ!❤️</p>
+        <p class="hidden-message" id="specialMessage">ว่าไงคับคนน่ารัก วันนี้วันอะไรเอ่ย 😁 มีเพลงมาให้ฟัง กับข้อความพิเศษให้อ่านน่ะ ลองกดเข้าไปสิ 👆🏻🫣</p>
         <div class="image-container" id="imageContainer">
-            <img src="https://media1.tenor.com/m/N6z7fKyQXCgAAAAC/bubu-dudu-bubu.gif" alt="Valentine's Image">
+            <img src="https://media.tenor.com/F9Q3thp6tzUAAAAi/bubu-bubu-dudu.gif" alt="Valentine's Image">
         </div>
         
         <div class="video-container" id="videoContainer">
@@ -110,6 +127,19 @@
             document.getElementById('trickyButton').style.display = 'none';
             document.getElementById('startVideoBtn').style.display = 'inline-block';
         }
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = '💖';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+        setInterval(createFloatingHeart, 300);
 
         function startVideo() {
             const video = document.getElementById('video');
@@ -130,10 +160,10 @@
                 { time: 3, text: "จะว่ายังไงดีล่ะ😅" },
                 { time: 7, text: "พี่ก็ไม่คิดเหมือนกันว่าวันนึงจะได้มาทำอะไรแบบนี้ แฮะๆ😁" },
                 { time: 12, text: "รู้สึกเขินจัง🤭" },
-                { time: 15, text: "พี่ก็ไม่รู้ว่าต้าจะชอบมั้ย" },
-                { time: 19, text: "แต่เอาเป็นว่า..." },
+                { time: 53, text: "พี่ก็ไม่รู้ว่าต้าจะชอบมั้ย" },
+                { time: 17, text: "แต่เอาเป็นว่า..." },
                 { time: 23, text: "ทุกครั้งที่ได้คุยกับต้า พี่รู้สึกดีมากจริงๆนะคับ✨" },
-                { time: 28, text: "รู้สึกว่าตัวเองรู้สึกโชคดีมากๆที่ได้รู้จักกับต้า😊" },
+                { time: 28, text: "รู้สึกว่าตัวเองโชคดีมากๆที่ได้รู้จักกับต้า😊" },
                 { time: 33, text: "เหมือนฝันเลยอ่าาา >//<" },
                 { time: 38, text: "ทำไมต้าถึงน่ารักขนาดนี้นะ หื้มมมมม🥰 " },
                 { time: 43, text: "ใจเย็นๆก่อนเจ้าโอ๊ต!!!" },
@@ -149,9 +179,7 @@
                 { time: 90, text: "พี่อาจจะเป็นคนที่อธิบายความรู้สึกตัวเองไม่ค่อยเก่งเท่าไหร่..." },
                 { time: 95, text: "แต่ทั้งหมดนี้คือสิ่งที่พี่อยากบอกให้ต้าฟังคับ🫣" },
                 { time: 100, text: "รู้สึกเขินจริงๆนะเนี่ย 5555" },
-                { time: 104, text: "พี่ขอให้วันนี้เป็นอีก 1 วันที่ต้ามีความสุขมากๆ"},
-                { time: 109, text: "ขอให้ได้รับความรักจากทุกๆคนที่ต้ารักด้วยนะ"},
-                { time: 115, text: "Happy Valentine day kub😊🩵" }
+                { time: 103, text: "Happy Valentine na kub🩵" }
             ];
 
             video.ontimeupdate = function() {
